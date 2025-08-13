@@ -30,6 +30,7 @@ reader = easyocr.Reader(
     user_network_directory=os.path.join(model_dir, "user_network")
 )
 
+
 def extract_ui_elements(screen):
     """Detect UI elements using EasyOCR (Tesseract Alternative)."""
     if screen is None or isinstance(screen, str) or (isinstance(screen, np.ndarray) and screen.size == 0):  # Handle empty input cases
