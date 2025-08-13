@@ -2,7 +2,7 @@ gradio
 torch>=2.0.0
 transformers>=4.39.0
 openai>=1.14.0
-numpy>=1.24.0
+numpy>=1.24.4
 pillow>=9.5.0
 easyocr==1.7.1
 opencv-python==4.9.0.80
