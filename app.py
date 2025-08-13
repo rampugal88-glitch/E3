@@ -20,16 +20,21 @@ if not openai_key:
 else:
     os.environ["OPENAI_API_KEY"] = openai_key
 
-# Use /tmp for writable storage in Streamlit Cloud
-model_dir = os.path.join("/tmp", ".EasyOCR")
-os.makedirs(model_dir, exist_ok=True)
+@st.cache_resource
+def load_easyocr_reader():
+    # Use persistent cache directory instead of /tmp
+    model_dir = os.path.expanduser("~/.cache/.EasyOCR")
+    os.makedirs(model_dir, exist_ok=True)
+    
+    return easyocr.Reader(
+        ['en'],
+        gpu=False,  # Avoid slow GPU check
+        model_storage_directory=model_dir,
+        user_network_directory=os.path.join(model_dir, "user_network")
+    )
 
-reader = easyocr.Reader(
-    ['en'],
-    model_storage_directory=model_dir,
-    user_network_directory=os.path.join(model_dir, "user_network")
-)
-
+# Load reader once
+reader = load_easyocr_reader()
 
 def extract_ui_elements(screen):
     """Detect UI elements using EasyOCR (Tesseract Alternative)."""
