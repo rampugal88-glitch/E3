@@ -6,9 +6,19 @@ import os
 import json
 import easyocr
 from PIL import Image
+import streamlit as st
 
-openai_key = st.secrets["OPENAI_API_KEY"]
-os.environ["OPENAI_API_KEY"] = openai_key
+# Try to get from Streamlit secrets
+if "OPENAI_API_KEY" in st.secrets:
+    openai_key = st.secrets["OPENAI_API_KEY"]
+else:
+    # Fallback to environment variable
+    openai_key = os.getenv("OPENAI_API_KEY", "")
+
+if not openai_key:
+    st.error("Missing OpenAI API key. Please set it in Streamlit secrets or as an environment variable.")
+else:
+    os.environ["OPENAI_API_KEY"] = openai_key
 
 # Use a guaranteed writable directory for models
 model_dir = os.path.join("/tmp", ".EasyOCR")
@@ -19,7 +29,6 @@ reader = easyocr.Reader(
     model_storage_directory=model_dir,
     user_network_directory=os.path.join(model_dir, "user_network")
 )
-
 
 def extract_ui_elements(screen):
     """Detect UI elements using EasyOCR (Tesseract Alternative)."""
