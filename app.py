@@ -10,9 +10,9 @@ from PIL import Image
 openai_key = st.secrets["OPENAI_API_KEY"]
 os.environ["OPENAI_API_KEY"] = openai_key
 
-# Ensure model path exists in a writable location
-model_dir = os.path.join(os.getcwd(), ".EasyOCR")
-os.makedirs(model_dir, exist_ok=True)
+# Use a guaranteed writable directory for models
+model_dir = os.path.join("/tmp", ".EasyOCR")
+os.makedirs(os.path.join(model_dir, "user_network"), exist_ok=True)
 
 reader = easyocr.Reader(
     ['en'],
