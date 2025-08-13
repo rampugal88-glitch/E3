@@ -23,12 +23,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the app
 COPY . .
 
-ENV PORT=7860
-EXPOSE 7860
-
-# Launch your Gradio app
-CMD ["python", "app.py"]
-
+ENV PORT=8501
+EXPOSE 8501
 
 # Run Streamlit app
 CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
