@@ -5,5 +5,5 @@ gradio
 numpy
 pillow
 easyocr
-opencv-python
+opencv-python-headless<4.9
 streamlit
