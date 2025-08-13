@@ -7,20 +7,19 @@ import json
 import easyocr
 from PIL import Image
 
-# Set OpenAI API key with error handling
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-if not OPENAI_API_KEY:
-    raise ValueError("❌ ERROR: OpenAI API key is missing! Please set the OPENAI_API_KEY environment variable.")
-openai.api_key = OPENAI_API_KEY
+openai_key = st.secrets["OPENAI_API_KEY"]
+os.environ["OPENAI_API_KEY"] = openai_key
 
-# Initialize EasyOCR reader
-EASY_OCR_PATH = '/tmp/.EasyOCR'
+# Ensure model path exists in a writable location
+model_dir = os.path.join(os.getcwd(), ".EasyOCR")
+os.makedirs(model_dir, exist_ok=True)
 
 reader = easyocr.Reader(
     ['en'],
-    model_storage_directory=EASY_OCR_PATH,
-    user_network_directory=os.path.join(EASY_OCR_PATH, 'user_network')
+    model_storage_directory=model_dir,
+    user_network_directory=os.path.join(model_dir, "user_network")
 )
+
 
 def extract_ui_elements(screen):
     """Detect UI elements using EasyOCR (Tesseract Alternative)."""
