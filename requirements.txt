@@ -4,6 +4,6 @@ openai
 gradio
 numpy
 pillow
-easyocr
-opencv-python-headless<4.9
+opencv-python-headless==4.9.0.80
+easyocr==1.7.1
 streamlit
