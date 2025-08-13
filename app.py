@@ -20,9 +20,9 @@ if not openai_key:
 else:
     os.environ["OPENAI_API_KEY"] = openai_key
 
-# Use a guaranteed writable directory for models
+# Use /tmp for writable storage in Streamlit Cloud
 model_dir = os.path.join("/tmp", ".EasyOCR")
-os.makedirs(os.path.join(model_dir, "user_network"), exist_ok=True)
+os.makedirs(model_dir, exist_ok=True)
 
 reader = easyocr.Reader(
     ['en'],
