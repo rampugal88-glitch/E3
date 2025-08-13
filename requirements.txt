@@ -6,3 +6,4 @@ numpy
 pillow
 easyocr
 opencv-python
+streamlit
